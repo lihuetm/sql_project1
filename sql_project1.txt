@@ -1,0 +1,123 @@
+/*Join tables*/
+
+CREATE TABLE persons (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    age INTEGER);
+    
+INSERT INTO persons (fullname, age) VALUES ("Bobby McBobbyFace", "12");
+INSERT INTO persons (fullname, age) VALUES ("Lucy BoBucie", "25");
+INSERT INTO persons (fullname, age) VALUES ("Banana FoFanna", "14");
+INSERT INTO persons (fullname, age) VALUES ("Shish Kabob", "20");
+INSERT INTO persons (fullname, age) VALUES ("Fluffy Sparkles", "8");
+
+CREATE table hobbies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id INTEGER,
+    name TEXT);
+    
+INSERT INTO hobbies (person_id, name) VALUES (1, "drawing");
+INSERT INTO hobbies (person_id, name) VALUES (1, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (2, "dancing");
+INSERT INTO hobbies (person_id, name) VALUES (2, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (3, "skating");
+INSERT INTO hobbies (person_id, name) VALUES (3, "rowing");
+INSERT INTO hobbies (person_id, name) VALUES (3, "drawing");
+INSERT INTO hobbies (person_id, name) VALUES (4, "coding");
+INSERT INTO hobbies (person_id, name) VALUES (4, "dilly-dallying");
+INSERT INTO hobbies (person_id, name) VALUES (4, "meowing");
+
+CREATE table friends (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person1_id INTEGER,
+    person2_id INTEGER);
+
+
+INSERT INTO friends (person1_id, person2_id)
+    VALUES (2, 3);
+    
+    SELECT persons.fullname, hobbies.name
+    FROM persons
+    JOIN hobbies
+      ON persons.id= hobbies.person_id;
+      
+    SELECT A.fullname as "name", B.fullname as "friend name"
+    FROM friends
+    JOIN persons A
+    ON A.id= friends.person1_id
+    JOIN persons B 
+    ON B.id= friends.person2_id 
+
+/*Alter or delete tables*/
+
+/* What does the app's SQL look like? */
+CREATE TABLE lihuetm (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT,
+    minutes INTEGER,
+    journal TEXT);
+    
+INSERT INTO lihuetm (date, minutes, journal)
+    VALUES ("12/10/2022", "7", "you look amazing");
+    
+INSERT INTO lihuetm (date, minutes, journal)
+    VALUES ("15/10/2022", "10", "everything worksout for me");
+
+INSERT INTO lihuetm (date, minutes, journal)
+    VALUES ("20/11/2022", "10", "you are the luckiest girl in the world");
+
+INSERT INTO lihuetm (date, minutes, journal)
+    VALUES ("01/01/2023", "7", "step by step");
+
+SELECT* FROM lihuetm;
+
+UPDATE lihuetm SET journal= "Garbage in, Garbage out" WHERE id=4;
+
+select* FROM lihuetm;
+
+select * FROM lihuetm WHERE id=4;
+
+ALTER TABLE lihuetm ADD emotions TEXT default "NS/NC";
+SELECT* FROM lihuetm;
+
+DELETE FROM lihuetm WHERE id=1;
+SELECT*FROM lihuetm;
+
+INSERT INTO lihuetm (date, minutes, journal, emotions) VALUES ("02/02/2023", "10", "You got it", "happy");
+
+SELECT* FROM lihuetm
+
+
+
+/* Students grades*/
+CREATE TABLE student_grades (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    number_grade INTEGER,
+    fraction_completed REAL);
+    
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winston", 90, 0.805);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winnefer", 95, 0.901);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winsteen", 85, 0.906);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Wincifer", 66, 0.7054);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winster", 76, 0.5013);
+INSERT INTO student_grades (name, number_grade, fraction_completed)
+    VALUES ("Winstonia", 82, 0.9045);
+
+SELECT name, number_grade, ROUND(fraction_completed*100) AS percent_completed FROM student_grades;
+
+SELECT count(*) as estudiantes,
+CASE
+WHEN number_grade>90 THEN "A"
+WHEN number_grade>80 THEN "B"
+WHEN number_grade>70 THEN "C"
+ELSE "F"
+END AS "letter_grade"
+FROM "student_grades"
+GROUP BY letter_grade;
+
